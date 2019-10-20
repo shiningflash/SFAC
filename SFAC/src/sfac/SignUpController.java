@@ -86,7 +86,7 @@ public class SignUpController implements Initializable {
     private RadioButton studentRButton;
 
     int type =0;
-    CheckRegex cReg = new CheckRegex();
+    CheckRegex checkReg = new CheckRegex();
     
     private void showError(String err) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -112,11 +112,11 @@ public class SignUpController implements Initializable {
             return;
         }
         String Email_ID = email.getText();
-        
         ///here i'll send 1 or 2 or 3 as parameter for faculty, alumni, student respectively
         if (checkEmail(Email_ID,type)) {
             return;
         }
+         
         String Password = password.getText();
         if (checkPassword(Password)) {
             return;
@@ -209,7 +209,20 @@ public class SignUpController implements Initializable {
             showError("Enter your email");
             return true;
         }
-        String wrongEmailCheck = "SELECT * FROM USER_DATA WHERE EMAIL = '" + email + "'";
+        String wrongEmailCheck = null;
+        switch (n) {
+            case 1:
+                wrongEmailCheck = "SELECT * FROM FACULTY_DATA WHERE EMAIL_ID = '" + email + "'";
+                break;
+            case 2:
+                wrongEmailCheck = "SELECT * FROM ALUMNI_DATA WHERE EMAIL_ID = '" + email + "'";
+                break;
+            case 3:
+                wrongEmailCheck = "SELECT * FROM STUDENT_DATA WHERE EMAIL_ID = '" + email + "'";
+                break;
+            default:
+                break;
+        }
         connection = DriverManager.getConnection("jdbc:derby://localhost:1527/myDatabase", "app", "app");
         PreparedStatement ps = connection.prepareStatement(wrongEmailCheck);
         ResultSet rs = ps.executeQuery();
@@ -217,7 +230,7 @@ public class SignUpController implements Initializable {
             showError("This email already exists");
             return true;
         }
-        if(!cReg.checkEmail(email,n)){
+        if(checkReg.checkEmail(email,n)){
             showError("Incorrect email format");
             return true;
         }
@@ -228,7 +241,7 @@ public class SignUpController implements Initializable {
         if (pass.isEmpty()) {
             showError("Enter your password");
             return true;
-        }if(!cReg.checkPassword(pass)){
+        }if(checkReg.checkPassword(pass)){
             showError("Your password must contain 1 uppercase letter, 1 lowercase letter, 1 numerical number .");
             return true;
         }

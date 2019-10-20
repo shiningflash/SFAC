@@ -87,7 +87,7 @@ public class LogInController implements Initializable {
         }else if(email.endsWith("@bracu.ac.bd")){
             wrongEmailCheck = "SELECT * FROM FACULTY_DATA WHERE EMAIL_ID = '" + email + "'";
         }else{
-            wrongEmailCheck = "SELECT * FROM ALUMNI_DATA WHERE EMAIL = '" + email + "'";
+            wrongEmailCheck = "SELECT * FROM ALUMNI_DATA WHERE EMAIL_ID = '" + email + "'";
         }
         connection = DriverManager.getConnection("jdbc:derby://localhost:1527/myDatabase", "app", "app");
         PreparedStatement ps = connection.prepareStatement(wrongEmailCheck);
@@ -110,7 +110,7 @@ public class LogInController implements Initializable {
         }else if(email.endsWith("@bracu.ac.bd")){
             extractEmail = "SELECT * FROM FACULTY_DATA WHERE EMAIL_ID = '" + email + "'";
         }else{
-            extractEmail = "SELECT * FROM ALUMNI_DATA WHERE EMAIL = '" + email + "'";
+            extractEmail = "SELECT * FROM ALUMNI_DATA WHERE EMAIL_ID = '" + email + "'";
         }
         connection = DriverManager.getConnection("jdbc:derby://localhost:1527/myDatabase", "app", "app");
         PreparedStatement ps = connection.prepareStatement(extractEmail);
@@ -119,8 +119,6 @@ public class LogInController implements Initializable {
             String passwordDB = rs.getString(4);
             Encoding ed = new Encoding();
             String password = ed.getHash(pass);
-            System.out.println(pass);
-            System.out.println(password);
             if (!password.equals(passwordDB)) {
                 showError("Wrong password");
                 return true;

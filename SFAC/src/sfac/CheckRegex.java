@@ -7,6 +7,7 @@ package sfac;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.scene.control.Alert;
 
 /**
  *
@@ -33,18 +34,22 @@ public class CheckRegex {
                 state = 1;
             } else if ((state == 1) && (m1.find())) {
                 state = 1;
-            } else if ((state == 1) && (m2.find())) {
+            } else if ((state == 1) && (num == 3) && ((str.endsWith("@g.bracu.ac.bd")))) {
                 state = 2;
-            } else if ((state == 2) && (num == 1) && ((str.endsWith("@bracu.ac.bd")))) {
-                state = 3;
-            } else if ((state == 2) && (num == 2) && (((str.endsWith("gmail.com"))) || ((str.endsWith("yahoo.com"))) || ((str.endsWith("live.com"))))) {
-                state = 3;
-            } else if ((state == 2) && (num == 3) && (((str.endsWith("@g.bracu.ac.bd"))))) {
-                state = 3;
+                break;
+            } else if ((state == 1) && (num == 2) && (((str.endsWith("@gmail.com"))) || ((str.endsWith("@yahoo.com"))) || ((str.endsWith("@live.com"))))) {
+                state = 2;
+                break;
+            } else if ((state == 1) && (num == 1) && (((str.endsWith("@bracu.ac.bd"))))) {
+                state = 2;
+                break;
             }
         }
-        if (state == 3) return true;
-        else return false;
+        if (state == 2) return false;
+        else{
+            return true;
+        }
+        
     }
 
     public static boolean checkPassword(String str) {
@@ -76,7 +81,8 @@ public class CheckRegex {
                 break;
             }
         }
-        if(state==3) return true;
-        return false;
+        if(state==3) return false;
+        return true;
     }
+    
 }
