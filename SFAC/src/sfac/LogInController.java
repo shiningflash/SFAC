@@ -126,6 +126,21 @@ public class LogInController implements Initializable {
         }
         return false;
     }
+    
+    private static int sessionID = 0;
+    
+    public static int getSessionID() {
+        return sessionID;
+    }
+    
+    public static void setSessionID(int sessionid) {
+        sessionID = sessionid;
+    }
+    
+    private int generateSessionID() {
+        sessionID++;
+        return sessionID;
+    }
 
     //if false then it will work
     @FXML
@@ -138,10 +153,10 @@ public class LogInController implements Initializable {
         if (checkPassword(Email_ID, Password)) {
             return;
         }
+        generateSessionID();
         Parent home;
-        String extractEmail="";
         if(Email_ID.endsWith("@g.bracu.ac.bd")){
-            home = FXMLLoader.load(getClass().getResource("Student_Dashboard.fxml"));
+            home = FXMLLoader.load(getClass().getResource("Student_Dashboard.fxml"));    
         }else if(Email_ID.endsWith("@bracu.ac.bd")){
             home = FXMLLoader.load(getClass().getResource("Faculty_Dashboard.fxml"));
         }else{

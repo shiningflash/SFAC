@@ -148,9 +148,13 @@ public class SignUpController implements Initializable {
                 + "'" + Last_Name + "',"
                 + "'" + Password + "'" + ")";
         }
+        String addingInfoToPrev="INSERT INTO PREVIOUS_PASSWORDS VALUES ("
+                + "'" + Email_ID + "'," 
+                + "'" + Password + "'" + ")";
         connection = DriverManager.getConnection("jdbc:derby://localhost:1527/myDatabase", "app", "app");
         Statement stm = connection.createStatement();
         int r = stm.executeUpdate(addingInfo);
+        stm.executeUpdate(addingInfoToPrev);
         if (r != 0) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText("SignUp Successful");

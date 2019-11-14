@@ -5,9 +5,18 @@
  */
 package sfac;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -16,12 +25,22 @@ import javafx.fxml.Initializable;
  */
 public class Faculty_DashboardController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    
+    @FXML
+    private Button logOutButton;
+
+    @FXML
+    void logOutMethod(MouseEvent event) throws IOException {
+        Parent home;
+        home = FXMLLoader.load(getClass().getResource("LogIn.fxml")); 
+        Scene homeScene = new Scene(home);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setTitle("Dashboard");
+        window.setScene(homeScene);
+        window.show();
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    } 
 }
