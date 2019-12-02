@@ -27,7 +27,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="forgotPassword" layoutX="138.0" layoutY="216.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" style="-fx-background-color: TRANSPARENT;" text="Forgot Password?" textFill="#1a3d7c" />
+            <Button fx:id="forgotPassword" layoutX="138.0" layoutY="216.0" mnemonicParsing="false" onMouseClicked="#changePass" prefHeight="25.0" prefWidth="111.0" style="-fx-background-color: TRANSPARENT;" text="Forgot Password?" textFill="#1a3d7c" />
          </children>
          <effect>
             <DisplacementMap>

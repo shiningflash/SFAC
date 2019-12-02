@@ -9,12 +9,6 @@ package sfac;
  *
  * @author Faizun
  */
- 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-
-
 import java.security.MessageDigest;
 import sun.misc.BASE64Encoder;
 

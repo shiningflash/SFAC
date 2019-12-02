@@ -8,16 +8,15 @@ public class MainClass extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Alumni_Dashboard.fxml"));
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("LogIn.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         
         primaryStage.setScene(scene);
         primaryStage.show();
+        
     }
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         launch(args);
     }

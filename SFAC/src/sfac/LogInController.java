@@ -36,7 +36,7 @@ import javafx.stage.Stage;
  */
 public class LogInController implements Initializable {
 
-    
+    static String loginEmail = "NULL";
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -68,7 +68,20 @@ public class LogInController implements Initializable {
     @FXML
     void addPass(ActionEvent event) {
     }
+    
+    public String getEmail() {
+        return loginEmail;
+    }
 
+    @FXML
+    void changePass(MouseEvent event) throws IOException {
+        Parent home = FXMLLoader.load(getClass().getResource("Forgot_Pass.fxml"));
+        Scene homeScene = new Scene(home);
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setTitle("Password Recovery");
+        window.setScene(homeScene);
+        window.show();
+    }
     private void showError(String err) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
@@ -160,8 +173,10 @@ public class LogInController implements Initializable {
         }else if(Email_ID.endsWith("@bracu.ac.bd")){
             home = FXMLLoader.load(getClass().getResource("Faculty_Dashboard.fxml"));
         }else{
-            home = FXMLLoader.load(getClass().getResource("Alumni_Dashboard.fxml"));
+            home = FXMLLoader.load(getClass().getResource("AlumniDashboard.fxml"));
+            
         }
+        this.loginEmail = email.getText();
         Scene homeScene = new Scene(home);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setTitle("Dashboard");
