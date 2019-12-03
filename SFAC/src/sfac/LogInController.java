@@ -169,9 +169,9 @@ public class LogInController implements Initializable {
         generateSessionID();
         Parent home;
         if(Email_ID.endsWith("@g.bracu.ac.bd")){
-            home = FXMLLoader.load(getClass().getResource("Student_Dashboard.fxml"));    
+            home = FXMLLoader.load(getClass().getResource("StudentDashboard.fxml"));    
         }else if(Email_ID.endsWith("@bracu.ac.bd")){
-            home = FXMLLoader.load(getClass().getResource("Faculty_Dashboard.fxml"));
+            home = FXMLLoader.load(getClass().getResource("FacultyDashboard.fxml"));
         }else{
             home = FXMLLoader.load(getClass().getResource("AlumniDashboard.fxml"));
             

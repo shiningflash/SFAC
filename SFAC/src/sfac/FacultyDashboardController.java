@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package sfac;
 
 import java.io.IOException;
@@ -10,8 +15,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.Stack;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -33,12 +36,11 @@ import javafx.stage.Stage;
  *
  * @author Faizun
  */
-public class AlumniDashboardController implements Initializable {
+public class FacultyDashboardController implements Initializable {
 
     @FXML
-    private Button postButton;
-    @FXML
     private Button logoutButton;
+
     @FXML
     private Pane display;
 
@@ -72,21 +74,6 @@ public class AlumniDashboardController implements Initializable {
         window.show();
     }
 
-    @FXML
-    void newpost(MouseEvent event) {
-        Parent home;
-        try {
-            home = FXMLLoader.load(getClass().getResource("PostDescription.fxml"));
-            Scene homeScene = new Scene(home);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setTitle("Job offering");
-            window.setScene(homeScene);
-            window.show();
-        } catch (IOException ex) {
-            Logger.getLogger(AlumniDashboardController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         int rowCount = 0;
@@ -107,7 +94,7 @@ public class AlumniDashboardController implements Initializable {
         }
 
         // adding grid pane too
-        
+        PreparedStatement ps;
         try {
             connection = DriverManager.getConnection("jdbc:derby://localhost:1527/myDatabase", "app", "app");
             int i = 0;
@@ -178,4 +165,5 @@ public class AlumniDashboardController implements Initializable {
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         display.getChildren().add(sp);
     }
+
 }
