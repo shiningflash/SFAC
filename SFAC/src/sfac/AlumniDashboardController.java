@@ -8,10 +8,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -43,11 +46,11 @@ public class AlumniDashboardController implements Initializable {
     private Pane display;
 
     Stack<String> stack = new Stack<String>();
-
     Statement statement;
     ResultSet rs;
     PreparedStatement ps;
     int res;
+    ArrayList <Button> blist;
 
     final ScrollPane sp = new ScrollPane();
     final VBox vb = new VBox();
@@ -60,6 +63,7 @@ public class AlumniDashboardController implements Initializable {
     static String da = "";
     static String tiSt = "";
     static String alu = "";
+    static String nameOfAuthor = "";
 
     @FXML
     void loggingOut(MouseEvent event) throws IOException {
@@ -89,12 +93,25 @@ public class AlumniDashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        String id = "";
+        blist = new ArrayList<Button>();
+        LogInController lc = new LogInController();
+        String e = lc.getEmail();
+
         int rowCount = 0;
         String query = "";
         VBox box = new VBox();
+
         box.getChildren().add(sp);
         try {
             connection = DriverManager.getConnection("jdbc:derby://localhost:1527/myDatabase", "app", "app");
+            String query2 = "SELECT FIRST_NAME FROM ALUMNI_DATA WHERE EMAIL_ID ='" + e + "'";
+            PreparedStatement ps2 = connection.prepareStatement(query2);
+            ResultSet rs2 = ps2.executeQuery();
+
+            if (rs2.next()) {
+                nameOfAuthor = rs2.getString(1);
+            }
             query = "SELECT * FROM POST";
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
@@ -103,17 +120,18 @@ public class AlumniDashboardController implements Initializable {
                 rowCount++;
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException exx) {
         }
 
         // adding grid pane too
-        
         try {
+            int i=0;
             connection = DriverManager.getConnection("jdbc:derby://localhost:1527/myDatabase", "app", "app");
-            int i = 0;
+            id = stack.peek();
+            Button btn = new Button("Delete");
             while (!stack.empty()) {
                 query = "SELECT * FROM POST WHERE TIMESTAMP = '" + stack.peek() + "'";
-                stack.pop();
+
                 ps = connection.prepareStatement(query);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
@@ -149,7 +167,6 @@ public class AlumniDashboardController implements Initializable {
                     Text post = new Text(descr);
                     post.setStyle("-fx-font-weight: regular");
                     grid.add(post, 0, 4);
-
                     if (i % 2 == 0) {
                         grid.setStyle("-fx-background-color: #d1c4e9;");
                     } else {
@@ -159,11 +176,9 @@ public class AlumniDashboardController implements Initializable {
                     vb.getChildren().add(grid);
                     i++;
                 }
-
+                
+                    stack.pop();
             }
-            rs.close();
-            statement.close();
-            connection.close();
         } catch (SQLException ex) {
 
         }

@@ -53,7 +53,6 @@ public class StudentDashboardController implements Initializable {
     ResultSet rs;
     PreparedStatement ps;
     int res;
-
     final ScrollPane sp = new ScrollPane();
     final VBox vb = new VBox();
     Connection connection;

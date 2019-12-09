@@ -8,7 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -111,11 +113,20 @@ public class PostDescriptionController {
         }
 
         Date date = new Date();
-        formatter = new SimpleDateFormat("YYYY-MM-dd");
-        String d = formatter.format(date);
+        formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String d = formatter.format(date); // after 1 week date
+        Calendar c = Calendar.getInstance();
+        try {
+            c.setTime(formatter.parse(d));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        c.add(Calendar.DAY_OF_MONTH, 7);
+        String d2 = formatter.format(c.getTime());
+        
         formatter = new SimpleDateFormat("HH:mm:ss");
         String t = formatter.format(date);
-        formatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+        formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dt = formatter.format(date);
 
         LogInController lc = new LogInController();
@@ -134,7 +145,7 @@ public class PostDescriptionController {
                 + "'" + pos + "',"
                 + "'" + des + "',"
                 + "'" + t + "',"
-                + "'" + d + "',"
+                + "'" + d2 + "',"
                 + "'" + dt + "',"
                 + "'" + nameOfAuthor + "'" + ")";
         Statement stm = connection.createStatement();
